@@ -4,8 +4,8 @@ class Parser(object):
     """
     Parses daily historical data and creates a Quote object for each line.
     
-    Instance Variables
-    ------------------
+    Data Attributes
+    ---------------
     path (string): Path of the data file to read in
     quotes (list): List of Quote objects
     

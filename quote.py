@@ -2,8 +2,7 @@ class Quote(object):
     """
     Price and volume action for a single trading day.
     
-    Quotes are stored sequentially in a dictionary with their seq_id being the
-    key.
+    Quotes are stored sequentially in a list with their seq_id being the index.
     
     """
     

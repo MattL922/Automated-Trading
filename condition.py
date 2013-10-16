@@ -3,10 +3,18 @@ class Condition(object):
         pass
 
 class PriceCrossesMA(Condition):
-    def __init__(self, ma_period, above, below):
-        self.ma_period = ma_period
-        self.above     = above
-        self.below     = below
+    def __init__(self, ma, above, below):
+        self.ma    = ma
+        self.above = above
+        self.below = below
     
-    def evaluate(self, quote_dict, seq_id):
-        if quote_dict[seq_id-1].high <= 
+    def evaluate(self, quotes, seq_id):
+        quote  = quotes[seq_id]
+        ma_val = self.ma.calculate(quotes, seq_id)
+        if self.above:
+            if quote.open <= ma_val and quote.high > ma_val:
+                return True
+        elif self.below:
+            if quote.open >= ma_val and quote.low < ma_val:
+                return True
+        return False
