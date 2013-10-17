@@ -1,6 +1,9 @@
 class Indicator(object):
     def __init__(self):
         pass
+    
+    def calculate(self):
+        raise Exception("calculate method not implemented.")
 
 class MovingAverage(Indicator):
     def __init__(self, period, open=False, high=False, low=False, close=True):

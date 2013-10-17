@@ -3,14 +3,20 @@ class System(object):
         pass
 
 class Strategy(object):
-    def __init__(self, entry=None, exit=None):
-        self.entry = entry
-        self.exit  = exit
-
-class Entry(object):
     def __init__(self):
-        self.conditions = []
-
-class Exit(object):
-    def __init__(self):
-        self.conditions = []
+        self.entry_conditions = []
+        self.exit_conditions  = []
+    
+    def add_entry_condition(self, condition):
+        self.entry_conditions.append(condition)
+    
+    def add_exit_condition(self, condition):
+        self.exit_conditions.append(condition)
+    
+    def eval_entry_conditions(self):
+        """What if not all conditions are necessary for entry?"""
+        return all(self.entry_conditions)
+    
+    def eval_exit_conditions(self):
+        """What if not all conditions are necessary for exit?"""
+        return all(self.exit_conditions)

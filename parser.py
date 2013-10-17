@@ -12,7 +12,7 @@ class Parser(object):
     """
     
     def __init__(self, path):
-        self.path = path
+        self.path   = path
         self.quotes = []
     
     def parse_quotes(self):
@@ -25,7 +25,7 @@ class Parser(object):
         with open(self.path, "r") as f:
             lines = f.readlines()
             lines.reverse()
-            for line in lines[:-1]:
+            for i, line in enumerate(lines[:-1]):
                 line   = line.split(",")
                 date   = line[0].strip()
                 open   = float(line[1].strip())
@@ -33,6 +33,6 @@ class Parser(object):
                 low    = float(line[3].strip())
                 close  = float(line[4].strip())
                 volume = int(line[5].strip())
-                quote  = Quote(date, open, high, low, close, volume)
+                quote  = Quote(i, date, open, high, low, close, volume)
                 self.quotes.append(quote)
 
