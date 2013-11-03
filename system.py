@@ -15,8 +15,8 @@ class Strategy(object):
     
     def eval_entry_conditions(self):
         """What if not all conditions are necessary for entry?"""
-        return all(self.entry_conditions)
+        return all([c.evaluate() for c in self.entry_conditions])
     
     def eval_exit_conditions(self):
         """What if not all conditions are necessary for exit?"""
-        return all(self.exit_conditions)
+        return all([c.evaluate() for c in self.exit_conditions])

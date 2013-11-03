@@ -1,6 +1,7 @@
 from data import Quote
 
 class Parser(object):
+    
     """
     Parses daily historical data and creates a Quote object for each line.
     
@@ -8,7 +9,6 @@ class Parser(object):
     ---------------
     path (string): Path of the data file to read in
     quotes (list): List of Quote objects
-    
     """
     
     def __init__(self, path):
@@ -19,9 +19,7 @@ class Parser(object):
         """
         Read and parse the data file located at self.path.
         Create a Quote object for each line.
-        
         """
-        
         with open(self.path, "r") as f:
             lines = f.readlines()
             lines.reverse()
