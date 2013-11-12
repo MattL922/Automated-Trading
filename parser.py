@@ -1,4 +1,4 @@
-from data import Quote
+from quote import Quote
 
 class Parser(object):
     
@@ -7,30 +7,33 @@ class Parser(object):
     
     Data Attributes
     ---------------
-    path (string): Path of the data file to read in
-    quotes (list): List of Quote objects
+    path (string)
+        Path of the data file to read in
     """
     
     def __init__(self, path):
-        self.path   = path
-        self.quotes = []
+        self.path = path
     
     def parse_quotes(self):
         """
         Read and parse the data file located at self.path.
         Create a Quote object for each line.
+        
+        Returns a list of Quotes
         """
+        quotes = []
         with open(self.path, "r") as f:
             lines = f.readlines()
             lines.reverse()
             for i, line in enumerate(lines[:-1]):
                 line   = line.split(",")
-                date   = line[0].strip()
-                open   = float(line[1].strip())
-                high   = float(line[2].strip())
-                low    = float(line[3].strip())
-                close  = float(line[4].strip())
-                volume = int(line[5].strip())
-                quote  = Quote(i, date, open, high, low, close, volume)
-                self.quotes.append(quote)
+                d = line[0].strip()
+                o = float(line[1].strip())
+                h = float(line[2].strip())
+                l = float(line[3].strip())
+                c = float(line[4].strip())
+                v = int(line[5].strip())
+                quote  = Quote(i, d, o, h, l, c, v)
+                quotes.append(quote)
+        return quotes
 

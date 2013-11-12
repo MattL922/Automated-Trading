@@ -6,7 +6,7 @@ class Quote(object):
     Quotes are stored sequentially in a list with their seq_id being the index.
     """
     
-    def __init__(self, seq_id, d, o, h, l, c, v, prev, next):
+    def __init__(self, seq_id, d, o, h, l, c, v):
         self.seq_id = seq_id
         self.date   = d
         self.open   = o
