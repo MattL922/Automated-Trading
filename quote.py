@@ -6,11 +6,10 @@ class Quote(object):
     Quotes are stored sequentially in a list with their seq_id being the index.
     """
     
-    def __init__(self, seq_id, d, o, h, l, c, v):
-        self.seq_id = seq_id
-        self.date   = d
-        self.open   = o
-        self.high   = h
-        self.low    = l
-        self.close  = c
-        self.volume = v
+    def __init__(self, d, o, h, l, c, v):
+        self.d = d
+        self.o = o
+        self.h = h
+        self.l = l
+        self.c = c
+        self.v = v

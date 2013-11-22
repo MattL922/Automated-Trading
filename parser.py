@@ -33,7 +33,7 @@ class Parser(object):
                 l = float(line[3].strip())
                 c = float(line[4].strip())
                 v = int(line[5].strip())
-                quote  = Quote(i, d, o, h, l, c, v)
+                quote  = Quote(d, o, h, l, c, v)
                 quotes.append(quote)
         return quotes
 

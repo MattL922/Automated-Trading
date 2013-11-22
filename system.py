@@ -5,7 +5,7 @@ class System(object):
         self.parser = Parser(path)
         self.entry_strategy = Strategy()
         self.exit_strategy = Strategy()
-        self.quotes = None
+        self.quotes = self.parser.parse_quotes()
     
     def add_entry_condition(self, condition):
         self.entry_strategy.add_condition(condition)
@@ -13,8 +13,9 @@ class System(object):
     def add_exit_condition(self, condition):
         self.exit_strategy.add_condition(condition)
     
-    def init_quotes(self):
-        self.quotes = self.parser.parse_quotes()
+    def run_backtest(self):
+        for i in xrange(len(self.quotes)):
+            print self.entry_strategy.eval_conditions(self.quotes, i)
 
 class Strategy(object):
     def __init__(self):
@@ -23,9 +24,9 @@ class Strategy(object):
     def add_condition(self, condition):
         self.conditions.append(condition)
     
-    def eval_conditions(self):
+    def eval_conditions(self, quotes, i):
         """What if not all conditions are necessary for entry/exit?"""
-        return all([c.evaluate() for c in self.conditions])
+        return all([c.evaluate(quotes, i) for c in self.conditions])
 
 class Portfolio(object):
     def __init__(self):

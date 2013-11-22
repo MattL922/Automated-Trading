@@ -21,13 +21,13 @@ class MovingAverage(Indicator):
     ---------------
     period (integer)
         The number of trading days to calculate the moving average over
-    open (boolean)
+    o (boolean)
         If true, calculate the moving average from the open prices
-    high (boolean)
+    h (boolean)
         If true, calculate the moving average from the high prices
-    low (boolean)
+    l (boolean)
         If true, calculate the moving average from the low prices
-    close (boolean)
+    c (boolean)
         If true, calculate the moving average from the close prices
     
     Subclasses
@@ -36,12 +36,12 @@ class MovingAverage(Indicator):
     ExponentialMovingAverage
     """
     
-    def __init__(self, period, open=False, high=False, low=False, close=True):
+    def __init__(self, period, o=False, h=False, l=False, c=True):
         self.period = period
-        self.open   = open
-        self.high   = high
-        self.low    = low
-        self.close  = close
+        self.o      = o
+        self.h      = h
+        self.l      = l
+        self.c      = c
     
     def calculate(self):
         pass
@@ -52,10 +52,10 @@ class SimpleMovingAverage(MovingAverage):
     Calculates a simple moving average.
     """
     
-    def __init__(self, period, open=False, high=False, low=False, close=True):
-        super(SimpleMovingAverage, self).__init__(period, open, high, low, close)
+    def __init__(self, period, o=False, h=False, l=False, c=True):
+        super(SimpleMovingAverage, self).__init__(period, o, h, l, c)
     
-    def calculate(self, quotes, seq_id):
+    def calculate(self, quotes, i):
         """
         Calculates the simple moving average from a list of Quotes.
         
@@ -69,14 +69,14 @@ class SimpleMovingAverage(MovingAverage):
             The index of the last Quote in quotes to calculate the moving
             average from
         """
-        if seq_id < self.period-1:
+        if i < self.period-1:
             raise Exception("Not enough Quotes to calculate a {0} period MA.".format(self.period))
-        if self.open:
-            return sum([q.open for q in quotes[seq_id-self.period+1:seq_id+1]])/self.period
-        elif self.high:
-            return sum([q.high for q in quotes[seq_id-self.period+1:seq_id+1]])/self.period
-        elif self.low:
-            return sum([q.low for q in quotes[seq_id-self.period+1:seq_id+1]])/self.period
+        if self.o:
+            return sum([q.o for q in quotes[i-(self.period-1):i+1]])/self.period
+        elif self.h:
+            return sum([q.h for q in quotes[i-(self.period-1):i+1]])/self.period
+        elif self.l:
+            return sum([q.l for q in quotes[i-(self.period-1):i+1]])/self.period
         else: # self.close
-            return sum([q.close for q in quotes[seq_id-self.period+1:seq_id+1]])/self.period
+            return sum([q.c for q in quotes[i-(self.period-1):i+1]])/self.period
 
