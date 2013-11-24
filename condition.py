@@ -32,13 +32,12 @@ class PriceCrossesMovingAverage(Condition):
         self.ma              = ma
         self.above           = above
         self.below           = below
-        self.crossover_price = None
     
     def evaluate(self, quotes, i):
         """
         Evaluates if the price crossed the moving average.
         
-        Returns true if the price crossed the moving average, false otherwise.
+        Returns True if the price crossed the moving average, False otherwise.
         
         Arguments
         ---------
@@ -53,26 +52,22 @@ class PriceCrossesMovingAverage(Condition):
             ma_val      = self.ma.calculate(quotes, i)
             prev_ma_val = self.ma.calculate(quotes, i-1)
         except:
-            return False
+            return None
         if self.above:
             # Two day crossover
             if prev_quote.c < prev_ma_val and quote.h > ma_val:
-                self.crossover_price = max(quote.o, ma_val + 0.01)
-                return True
+                return max(quote.o, ma_val + 0.01)
             # One day crossover
             if (quote.l < ma_val < quote.h) and (quote.c > ma_val or quote.o < ma_val):
-                self.crossover_price = ma_val + 0.01
-                return True
+                return ma_val + 0.01
         elif self.below:
             # Two day crossover
             if prev_quote.c > prev_ma_val and quote.l < ma_val:
-                self.crossover_price = min(quote.o, ma_val - 0.01)
-                return True
+                return min(quote.o, ma_val - 0.01)
             # One day crossover
             if (quote.l < ma_val < quote.h) and (quote.c < ma_val or quote.o > ma_val):
-                self.crossover_price = ma_val - 0.01
-                return True
-        return False
+                return ma_val - 0.01
+        return None
 
 # Maybe change this class to PriceRelativeToMovingAverage (o,h,l, AND c)
 class CloseRelativeToMovingAverage(Condition):
