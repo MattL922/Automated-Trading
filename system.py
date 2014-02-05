@@ -95,7 +95,19 @@ class Portfolio(object):
             self.position = Portfolio.SHORT
     
     def calculate_return(self):
-        return reduce(lambda x, y: x * y, [t2.price / t1.price for t1,t2 in zip(self.tradelog[::2], self.tradelog[1::2])])
+        dollar_val = 1.0
+        trade_sequence = []
+        for trade in self.tradelog:
+            trade_sequence.append(trade)
+            if trade.trade_type is Trade.SELL:
+                pct = (trade.price / trade_sequence[0].price)
+                dollar_val *= pct
+                trade_sequence = []
+            elif trade.trade_type is Trade.COVER:
+                pct = 1 - (trade.price / trade_sequence[0].price) + 1
+                dollar_val *= pct
+                trade_sequence = []
+        return dollar_val - 1
 
 class Trade(object):
     BUY   = 1
